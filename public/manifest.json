@@ -1,0 +1,15 @@
+{
+ "short_name": "movil",
+ "name": "molvil",
+ "start_url": "/index.html",
+ "display": "standalone",
+ "background_color": "#5C50EC",
+ "theme_color": "#099D0B",
+ "icons": [
+   {
+     "src": "img/logo.png",
+     "sizes": "1024x1024",
+     "type": "image/png"
+   }
+ ]
+}

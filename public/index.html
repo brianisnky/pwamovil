@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <meta charset="utf-8">
+   <title>Apli Web</title>
+
+   <!-- Ícono para la página web. -->
+   <link rel="icon" sizes="32x32" href="logo.ico">
+
+   <!-- Color de la barra de navegación de Chrome. -->
+   <meta name="theme-color" content="blue">
+
+   <!-- Configuración de la Web App Chrome y Microsoft Store. -->
+   <link rel="manifest" href="manifest.json">
+
+   <!-- Configuración para del acceso directo en Windows Edge/IE -->
+   <!-- Icono -->
+   <meta name="msapplication-TileImage" content="img/logo.png">
+   <!-- Color de tile. -->
+   <meta name="msapplication-TileColor" content="#4fc3f7">
+
+   <!-- Configuración para Web Clip en Safari. -->
+   <meta name="mobile-web-app-capable" content="yes">
+   <link rel="apple-touch-icon" sizes="1024x1024" href="img/logo.png">
+   <link rel="apple-touch-startup-image" sizes="1024x1024"
+     href="img/logo.png">
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="css/estilos.css">
+
+   <!-- update the version number as needed -->
+   <script defer src="/__/firebase/6.0.2/firebase-app.js"></script>
+   <!-- include only the Firebase features as you need -->
+   <script defer src="/__/firebase/6.0.2/firebase-auth.js"></script>
+   <script defer src="/__/firebase/6.0.2/firebase-firestore.js"></script>
+   <script defer src="/__/firebase/6.0.2/firebase-messaging.js"></script>
+   <script defer src="/__/firebase/6.0.2/firebase-storage.js"></script>
+   <!-- initialize the SDK after all desired features are loaded -->
+   <script defer src="/__/firebase/init.js"></script>
+
+ </head>
+ <body>
+ 	<center>
+   <form name="vista">
+           <header><h1>Saludo web</h1></header>
+           <p><big>Ingresa tu nombre</big> <br><br>
+       <input type="text" id="nombre1" required placeholder="Nombre 1"
+         accesskey="1">
+     </p>
+     <p><big>Escribe tu Fecha de nacimiento</big><br><br>
+       <input type="date" id="fecha"  min="1950-01-31" max="01-01-2010" required accesskey="2">
+     </p>
+     
+     <p>
+       <output name="respuesta"></output>
+     </p>
+     <p>
+       <button type="submit">Saludar</button>
+     </p>
+     <br><br><br><br><br><br>
+     <main role="main">
+       <p><output name="mensaje">Cargando .....</output></p>
+     </main>
+   </form>
+   <script>
+     /* Registra un service worker para instalar la aplicación en el
+      * caché del navegador. */
+     async function registraServiceWorker() {
+       if ("serviceWorker" in navigator) {
+         try {
+           const registro = await navigator.serviceWorker.register("sw.js");
+           console.log("Service Worker registrado.");
+           console.log(registro);
+         } catch (e) {
+           muestraError(e);
+         }
+       }
+     }
+
+     registraServiceWorker();
+     document.addEventListener('DOMContentLoaded', function () {
+       try {
+         let app = firebase.app();
+         let features = ['auth', 'database', 'messaging', 'storage']
+           .filter(feature => typeof app[feature] === 'function');
+         document.vista.mensaje.value =
+           `Firebase SDK cargó con: ${features.join(', ')}`;
+       } catch (e) {
+         console.log(e);
+         document.vista.mensaje.value =
+           'Error cargando Firebase SDK. Revisa la consola del navegador.';
+       }
+     });
+   </script>
+    <script>
+       "use strict";
+     document.vista.addEventListener("submit", saluda);
+     function saluda(evt) {
+       evt.preventDefault();
+       const nombre1 = document.vista.nombre1.value.trim();
+       const nacimiento = document.vista.fecha.value.trim();
+       
+       document.vista.respuesta.value = `Te llamas ${nombre1} y naciste el ${nacimiento}.`;
+     }
+
+   </script>
+     <footer><center><big>Nombre: </big>Beltran Kameyama Brian Felipe <br><big>Grupo:</big> IC51</center></footer>
+
+  
+  
+</center>
+ </body>
+</html>
